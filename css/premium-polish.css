@@ -1,0 +1,338 @@
+/* --- Premium Polish Layer --- */
+
+:root {
+    --cursor-size: 20px;
+    --cursor-scale: 1;
+    --primary-glow: rgba(87, 36, 255, 0.4);
+}
+
+/* Custom Cursor */
+.cursor-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10000;
+}
+
+.cursor-dot {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10001;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+}
+
+.cursor-ring {
+    position: fixed;
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+/* Cursor States */
+.cursor-ring.active {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+}
+
+.cursor-ring.magnetic {
+    border-color: #edff66;
+    background: rgba(237, 255, 102, 0.1);
+}
+
+/* Film Grain Overlay */
+.film-grain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: soft-light;
+    animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-5%, -10%);
+    }
+
+    20% {
+        transform: translate(-15%, 5%);
+    }
+
+    30% {
+        transform: translate(7%, -25%);
+    }
+
+    40% {
+        transform: translate(-5%, 25%);
+    }
+
+    50% {
+        transform: translate(-15%, 10%);
+    }
+
+    60% {
+        transform: translate(15%, 0%);
+    }
+
+    70% {
+        transform: translate(0%, 15%);
+    }
+
+    80% {
+        transform: translate(3%, 35%);
+    }
+
+    90% {
+        transform: translate(-10%, 10%);
+    }
+}
+
+/* Reveal Text Styles */
+.js-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Magnetic Element Classes */
+.js-magnetic {
+    display: inline-block;
+}
+
+/* Smooth Scroll Helper */
+html.lenis {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
+}
+
+/* Spotlight Glow Effect */
+.about,
+.cta,
+.discover {
+    position: relative;
+    overflow: hidden;
+}
+
+.about::after,
+.cta::after,
+.discover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(87, 36, 255, 0.08),
+            transparent 40%);
+}
+
+.cta::after {
+    background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(255, 255, 255, 0.05),
+            transparent 50%);
+}
+
+/* Liquid Background Blobs (Optimized) */
+.liquid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    /* Use opacity and gradients instead of blur filter for major performance boost */
+    opacity: 0.15;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 50%, rgba(87, 36, 255, 0.1), transparent 70%);
+}
+
+.blob {
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    border-radius: 50%;
+    /* Cheaper gradient */
+    background: radial-gradient(circle at center, var(--primary-glow) 0%, transparent 70%);
+    will-change: transform;
+}
+
+/* Card Shimmer */
+.discover__item::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg,
+            transparent 45%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 55%);
+    transform: translate(-50%, -50%) rotate(var(--shimmer-rotate, 0deg));
+    left: var(--shimmer-x, 50%);
+    top: var(--shimmer-y, 50%);
+    z-index: 5;
+    pointer-events: none;
+    /* transition: transform 0.1s linear;  -- Removed for performance */
+    will-change: transform, left, top;
+}
+
+/* Reveal Parent Enhancement */
+.wrapper {
+    background-color: #000;
+    perspective: 1500px;
+    transform-style: preserve-3d;
+    overflow-x: hidden;
+}
+
+section {
+    will-change: transform, opacity;
+}
+
+/* Title Scrub helper */
+.js-scrub-text {
+    will-change: letter-spacing, skewX, transform;
+}
+
+/* Achievement System */
+.achievement-popup {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: rgba(87, 36, 255, 0.9);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 15px 25px;
+    border-radius: 12px;
+    color: white;
+    font-family: 'General', sans-serif;
+    transform: translateY(150%);
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 9999;
+}
+
+.achievement-popup.show {
+    transform: translateY(0);
+}
+
+.achievement-popup i {
+    margin-right: 10px;
+    color: #ffd700;
+}
+
+/* XP Bar */
+.xp-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 10001;
+}
+
+.xp-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #5724ff, #ff24e1);
+    transition: width 0.3s ease;
+}
+
+/* Environment Overlays */
+.env-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    mix-blend-mode: overlay;
+    opacity: 0.2;
+}
+
+/* Narrative Subtitles */
+.narrative-guide {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    z-index: 10000;
+}
+
+.narrative-text {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    opacity: 0;
+    filter: blur(5px);
+}
+
+/* Audio Icon Animation 🎵 */
+.menu__audio-toggle.is-playing .menu__audio-icon span {
+    animation: audioPulse 1.2s ease-in-out infinite !important;
+    background-color: #5724ff !important;
+}
+
+.menu__audio-toggle.is-playing .menu__audio-icon span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.menu__audio-toggle.is-playing .menu__audio-icon span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.menu__audio-toggle.is-playing .menu__audio-icon span:nth-child(4) {
+    animation-delay: 0.6s;
+}
+
+@keyframes audioPulse {
+
+    0%,
+    100% {
+        height: 2px;
+    }
+
+    50% {
+        height: 18px;
+    }
+}
